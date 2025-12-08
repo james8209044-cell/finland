@@ -1,357 +1,716 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>芬蘭行前準備清單</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #050816;
-      color: #f9fafb;
-    }
-    .wrapper {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 16px 16px 40px;
-    }
-    h1 {
-      font-size: 1.3rem;
-      margin: 8px 0 4px;
-    }
-    .subtitle {
-      font-size: 0.85rem;
-      color: #9ca3af;
-      margin-bottom: 16px;
-    }
-    /* tab 切換 */
-    .tab-row {
-      display: flex;
-      overflow-x: auto;
-      gap: 6px;
-      margin-bottom: 12px;
-    }
-    .tab-btn {
-      flex: 0 0 auto;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid transparent;
-      background: rgba(15,23,42,0.8);
-      color: #e5e7eb;
-      font-size: 0.8rem;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-    .tab-btn.active {
-      background: #22c55e;
-      color: #022c22;
-      border-color: rgba(34,197,94,0.9);
-      font-weight: 600;
-    }
-    /* 新增輸入列 */
-    .add-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin: 6px 0 12px;
-    }
-    .add-input {
-      flex: 1;
-      padding: 8px 10px;
-      border-radius: 999px;
-      border: none;
-      outline: none;
-      font-size: 0.85rem;
-      background: rgba(15,23,42,0.9);
-      color: #f9fafb;
-    }
-    .add-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: none;
-      background: #6366f1;
-      color: white;
-      font-size: 1.2rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    /* 清單項目 */
-    .item {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-      border-radius: 14px;
-      background: rgba(15,23,42,0.9);
-      box-shadow: 0 1px 0 rgba(15,23,42,0.9);
-    }
-    .item-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex: 1;
-    }
-    .item input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-    }
-    .item-text {
-      font-size: 0.9rem;
-      line-height: 1.4;
-      word-break: break-word;
-    }
-    .item.done .item-text {
-      text-decoration: line-through;
-      color: #6b7280;
-    }
-    .delete-btn {
-      border: none;
-      background: none;
-      color: #9ca3af;
-      cursor: pointer;
-      font-size: 1rem;
-      padding: 0 2px;
-    }
-    .date-label {
-      font-size: 0.8rem;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-    .hint {
-      font-size: 0.75rem;
-      color: #9ca3af;
-      margin-bottom: 4px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>芬蘭極光之旅 2026 (Firebase Sync)</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-radius: 12px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Tab Navigation */
+        .tabs-container {
+            background-color: #fff;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 10px 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            font-size: 0.95rem;
+            color: #666;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+            padding-bottom: 60px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 24px;
+            background-color: var(--accent-color);
+            margin-right: 10px;
+            border-radius: 3px;
+            position: absolute; /* Hack for visual alignment */
+            margin-left: -16px;
+        }
+        
+        .section-title span {
+            margin-left: 10px;
+        }
+
+        .status-indicator {
+            font-size: 0.7rem;
+            color: #888;
+            font-weight: normal;
+        }
+
+        /* Itinerary Content Styling */
+        .itinerary-item {
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 3px solid #eee;
+        }
+        
+        .time-badge {
+            display: inline-block;
+            background-color: #e8f4fc;
+            color: var(--accent-color);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .highlight-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffe0b2;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        /* Checklist Styles */
+        .todo-input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .todo-input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .add-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .todo-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .todo-item.completed {
+            background-color: #edf7ed;
+            opacity: 0.7;
+        }
+
+        .todo-item.completed span {
+            text-decoration: line-through;
+            color: #888;
+        }
+
+        .todo-checkbox {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .delete-btn {
+            margin-left: auto;
+            background: none;
+            border: none;
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0 5px;
+        }
+
+        /* Notes Styles */
+        .notes-area {
+            width: 100%;
+            height: 120px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-  <div class="wrapper">
-    <h1>行前準備清單</h1>
-    <div class="subtitle">
-      這份清單只會存到你的手機 / 電腦（localStorage），<br>
-      不會上傳任何個人資料到伺服器。
-    </div>
 
-    <!-- Tabs：Day 1~11 -->
-    <div class="tab-row" id="tabRow"></div>
-    <div class="date-label" id="dateLabel"></div>
+<header>
+    <h1>🇫🇮 芬蘭極光之旅</h1>
+    <p>2026/3/17 - 2026/4/8</p>
+</header>
 
-    <!-- 新增欄位 -->
-    <div class="add-row">
-      <input id="addInput" class="add-input" type="text"
-             placeholder="新增準備項目，例如：確認護照效期、換外幣…" />
-      <button class="add-btn" id="addBtn">＋</button>
-    </div>
-    <div class="hint">點選圈圈可勾選完成，右側「⋯」可刪除項目。</div>
+<div class="tabs-container" id="tabsContainer"></div>
+<div class="container" id="mainContent"></div>
 
-    <!-- 清單容器 -->
-    <div id="listContainer"></div>
-  </div>
+<!-- Firebase Setup -->
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore, doc, onSnapshot, setDoc, updateDoc, arrayUnion, getDoc } 
+    from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
- <script type="module">
-  // ---------------------------------------------------------
-  // 1. Firebase 設定與初始化
-  // ---------------------------------------------------------
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-  // 【重要】請將這裡換成你自己的 Firebase Config
-  const firebaseConfig = {
-    apiKey: "AIzaSyBwIh3o0YLN6dUkd8WVKB-heRMGNQT10e0",
-    authDomain: "database-650f5.firebaseapp.com",
-    projectId: "database-650f5",
-    storageBucket: "database-650f5.firebasestorage.app",
-    messagingSenderId: "698025718902",
-    appId: "1:698025718902:web:9f6a015a0e54cd234adb57",
-    measurementId: "G-N1XSQ3ETCE",
-  };
-
-  // 初始化 Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // 指定資料庫位置：集合 "finland" -> 文件 "shared_checklist"
-  const docRef = doc(db, "finland", "shared_checklist");
-
-  // ---------------------------------------------------------
-  // 2. 靜態資料與變數
-  // ---------------------------------------------------------
-  const days = [
-    { id: 'day1',  label: '3/28', title: 'DAY 1｜3/28 SAT' },
-    { id: 'day2',  label: '3/29', title: 'DAY 2｜3/29 SUN' },
-    { id: 'day3',  label: '3/30', title: 'DAY 3｜3/30 MON' },
-    { id: 'day4',  label: '3/31', title: 'DAY 4｜3/31 TUE' },
-    { id: 'day5',  label: '4/1',  title: 'DAY 5｜4/1 WED' },
-    { id: 'day6',  label: '4/2',  title: 'DAY 6｜4/2 THU' },
-    { id: 'day7',  label: '4/3',  title: 'DAY 7｜4/3 FRI' },
-    { id: 'day8',  label: '4/4',  title: 'DAY 8｜4/4 SAT' },
-    { id: 'day9',  label: '4/5',  title: 'DAY 9｜4/5 SUN' },
-    { id: 'day10', label: '4/6',  title: 'DAY 10｜4/6 MON' },
-    { id: 'day11', label: '4/7',  title: 'DAY 11｜4/7 TUE' }
-  ];
-
-  // DOM 元件
-  const tabRow = document.getElementById('tabRow');
-  const dateLabel = document.getElementById('dateLabel');
-  const listContainer = document.getElementById('listContainer');
-  const addInput = document.getElementById('addInput');
-  const addBtn = document.getElementById('addBtn');
-
-  // 狀態管理
-  let itemsByDay = {}; // 這裡存放雲端回來的資料
-  
-  // 讀取「使用者上次停在哪一天」（這不用同步，存本機就好）
-  let currentDayId = localStorage.getItem('my_last_day') || days[0].id;
-
-  // ---------------------------------------------------------
-  // 3. 核心功能：監聽與儲存
-  // ---------------------------------------------------------
-
-  // 【讀取】監聽 Firebase 資料庫變化
-  // 只要雲端資料一變，這裡就會自動執行，更新畫面
-  onSnapshot(docRef, (docSnap) => {
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      // 確保即使某天沒資料，也不會報錯
-      itemsByDay = data.itemsByDay || {};
-    } else {
-      // 如果資料庫是全新的，初始化它
-      itemsByDay = {};
-      saveToCloud(); 
-    }
-    renderAll(); // 重新繪製畫面
-  });
-
-  // 【寫入】將目前的狀態儲存到 Firebase
-  async function saveToCloud() {
-    try {
-      // 我們把整包 itemsByDay 存上去
-      await setDoc(docRef, { itemsByDay: itemsByDay }, { merge: true });
-    } catch (e) {
-      console.error("儲存失敗：", e);
-      alert("儲存失敗，請檢查網路或 API 設定");
-    }
-  }
-
-  // ---------------------------------------------------------
-  // 4. 畫面渲染邏輯 (Render)
-  // ---------------------------------------------------------
-
-  function renderTabs() {
-    tabRow.innerHTML = '';
-    days.forEach(d => {
-      const btn = document.createElement('button');
-      btn.className = 'tab-btn' + (d.id === currentDayId ? ' active' : '');
-      btn.textContent = d.label;
-      btn.onclick = () => {
-        currentDayId = d.id;
-        // 記住使用者選的天數
-        localStorage.setItem('my_last_day', currentDayId);
-        renderAll();
-      };
-      tabRow.appendChild(btn);
-    });
-    
-    const current = days.find(d => d.id === currentDayId);
-    dateLabel.textContent = current ? current.title : '';
-  }
-
-  function renderList() {
-    const items = itemsByDay[currentDayId] || [];
-    listContainer.innerHTML = '';
-
-    items.forEach((item) => {
-      const div = document.createElement('div');
-      div.className = 'item' + (item.done ? ' done' : '');
-
-      const left = document.createElement('div');
-      left.className = 'item-left';
-
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.checked = item.done;
-      
-      // 當打勾狀態改變
-      checkbox.onchange = () => {
-        item.done = checkbox.checked;
-        saveToCloud(); // 同步到雲端
-      };
-
-      const text = document.createElement('div');
-      text.className = 'item-text';
-      text.textContent = item.text;
-
-      left.appendChild(checkbox);
-      left.appendChild(text);
-
-      const delBtn = document.createElement('button');
-      delBtn.className = 'delete-btn';
-      delBtn.textContent = '⋯';
-      delBtn.title = '刪除';
-      
-      // 刪除邏輯
-      delBtn.onclick = () => {
-        if (confirm('要刪除這個項目嗎？')) {
-          // 使用 filter 透過 ID 刪除，避免刪錯人
-          itemsByDay[currentDayId] = itemsByDay[currentDayId].filter(i => i.id !== item.id);
-          saveToCloud(); // 同步到雲端
-        }
-      };
-
-      div.appendChild(left);
-      div.appendChild(delBtn);
-      listContainer.appendChild(div);
-    });
-  }
-
-  function renderAll() {
-    renderTabs();
-    renderList();
-  }
-
-  // ---------------------------------------------------------
-  // 5. 新增項目 (這裡實作了你的預設規則)
-  // ---------------------------------------------------------
-  function addItem() {
-    const text = addInput.value.trim();
-    if (!text) return;
-
-    if (!itemsByDay[currentDayId]) {
-      itemsByDay[currentDayId] = [];
-    }
-
-    // 【規則】建立新項目時，自動加上 id (使用當下時間戳記)
-    const newItem = {
-      id: Date.now(), // 這就是身分證，比如 1709123456789
-      text: text,
-      done: false
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyBwIh3o0YLN6dUkd8WVKB-heRMGNQT10e0",
+        authDomain: "database-650f5.firebaseapp.com",
+        projectId: "database-650f5",
+        storageBucket: "database-650f5.firebasestorage.app",
+        messagingSenderId: "698025718902",
+        appId: "1:698025718902:web:9f6a015a0e54cd234adb57",
+        measurementId: "G-N1XSQ3ETCE"
     };
 
-    itemsByDay[currentDayId].push(newItem);
-    
-    addInput.value = '';
-    saveToCloud(); // 儲存到雲端
-  }
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const COLLECTION_NAME = "itinerary_data";
 
-  // 綁定按鈕事件
-  addBtn.addEventListener('click', addItem);
-  addInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      addItem();
+    // --- Trip Data Source ---
+    const tripData = [
+        {
+            id: "info",
+            date: "行前資訊",
+            title: "交通 & 行李 & 住宿",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">行李寄存</div>
+                    <p><strong>1. Radical storage (一天5歐):</strong> 赫爾辛基與羅瓦涅米 行李寄存APP (10:00 - 19-22點之間要拿走)</p>
+                    <p><strong>2. Rovaniemi Insider Luggage Storage:</strong> 若火車站沒有空位可去。地點：Korkalonkatu 36 羅瓦涅米市中心</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">主要交通</div>
+                    <ul style="padding-left: 20px; margin: 5px 0;">
+                        <li>3/28 赫爾辛基機場 -> 赫爾辛基車站</li>
+                        <li>3/30 羅瓦涅米 -> 聖誕老人村</li>
+                        <li>4/1 聖誕老人村 -> 玻璃屋</li>
+                        <li>4/3 玻璃屋 -> 羅瓦涅米車站</li>
+                        <li>4/7 赫爾辛基車站 -> 赫爾辛基機場</li>
+                    </ul>
+                </div>
+            `
+        },
+        {
+            id: "day1",
+            date: "3/17 (五)",
+            title: "出發 / 飛行中",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">07:50 - 11:20</div>
+                    <p>台北 TPE -> 首爾 ICN</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">23:00 - 05:40 (+1)</div>
+                    <p>首爾 ICN -> 赫爾辛基 HEL</p>
+                </div>
+            `
+        },
+        {
+            id: "day2",
+            date: "3/28 (六)",
+            title: "抵達赫爾辛基",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">05:40</div>
+                    <p>降落赫爾辛基機場</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">上午</div>
+                    <p>前往市中心住宿 Check-in (寄放行李)，隨後市區自由活動。</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">16:00</div>
+                    <p>入住 <strong>Scandic Grand Central Helsinki</strong></p>
+                </div>
+            `
+        },
+        {
+            id: "day3",
+            date: "3/29 (日)",
+            title: "赫爾辛基 -> 臥鋪火車",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">12:00</div>
+                    <p>退房。享用飯店早餐、市區走動 (行李寄存)。</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">下午</div>
+                    <p>自由活動日</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">19:29</div>
+                    <p>搭乘臥鋪火車 (Night train 265) 前往羅瓦涅米。</p>
+                    <div class="highlight-box">設施：上下舖、私人衛浴 (Private en suite and shower)</div>
+                </div>
+            `
+        },
+        {
+            id: "day4",
+            date: "3/30 (一)",
+            title: "羅瓦涅米 / 聖誕老人村",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">07:20</div>
+                    <p>抵達羅瓦涅米 (Rovaniemi)</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">上午 - 15:00</div>
+                    <p>自由活動、前往聖誕老人村 Check-in。</p>
+                    <p>聖誕老人村觀光 (拍照、購物)。</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">16:00</div>
+                    <p>入住 <strong>聖誕老人村</strong> (D1)</p>
+                </div>
+            `
+        },
+        {
+            id: "day5",
+            date: "3/31 (二)",
+            title: "破冰船體驗",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">10:45 (表定)</div>
+                    <p>聖誕老人村接駁 -> 前往瑞典</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">活動</div>
+                    <p><strong>Polar Explorer 破冰船、龍蝦裝漂浮</strong> (KLOOK預定)</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">19:50 (表定)</div>
+                    <p>抵達聖誕老人村</p>
+                </div>
+                <div class="itinerary-item">
+                    <p>住宿：<strong>聖誕老人村</strong> (D2)</p>
+                </div>
+            `
+        },
+        {
+            id: "day6",
+            date: "4/1 (三)",
+            title: "雪橇體驗 / 移動至玻璃屋",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">12:00</div>
+                    <p>Check out 聖誕老人村 (行李寄存)</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">體驗活動</div>
+                    <p>1. 馴鹿雪橇 400公尺體驗</p>
+                    <p>2. 哈士奇雪橇 500公尺體驗</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">交通</div>
+                    <p>確認接駁車前往玻璃屋時間</p>
+                </div>
+                <div class="itinerary-item">
+                    <p>入住：<strong>Apukka Resort 玻璃屋</strong> (D1)</p>
+                </div>
+            `
+        },
+        {
+            id: "day7",
+            date: "4/2 (四)",
+            title: "玻璃屋度假村",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">全天</div>
+                    <p>度假村自由活動日</p>
+                </div>
+                <div class="itinerary-item">
+                    <p>入住：<strong>Apukka Resort 玻璃屋</strong> (D2)</p>
+                </div>
+            `
+        },
+        {
+            id: "day8",
+            date: "4/3 (五)",
+            title: "返程羅瓦涅米 / 臥鋪火車",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">白天</div>
+                    <p>自由活動日</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">17:52</div>
+                    <p>啟程羅瓦涅米車站 -> 搭乘臥鋪火車 (Night train 266)</p>
+                    <p>預計 4/4 06:27 抵達赫爾辛基</p>
+                    <div class="highlight-box">設施：上下舖、私人衛浴</div>
+                </div>
+            `
+        },
+        {
+            id: "day9",
+            date: "4/4 (六)",
+            title: "抵達赫爾辛基",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">06:27</div>
+                    <p>抵達赫爾辛基</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">白天</div>
+                    <p>赫爾辛基市區觀光</p>
+                    <p>推薦：安排老農貿市集觀光，享用鮭魚湯</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">16:00</div>
+                    <p>入住 <strong>Scandic Grand Central Helsinki</strong> (D1)</p>
+                </div>
+            `
+        },
+        {
+            id: "day10",
+            date: "4/5 (日)",
+            title: "赫爾辛基市區",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">全天</div>
+                    <p>赫爾辛基市區觀光 (可安排 Shopping 行程)</p>
+                </div>
+                <div class="itinerary-item">
+                    <p>入住：<strong>Scandic Grand Central Helsinki</strong> (D2)</p>
+                </div>
+            `
+        },
+        {
+            id: "day11",
+            date: "4/6 (一)",
+            title: "芬蘭堡 / 市區慢活",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">上午</div>
+                    <p>建議：芬蘭堡觀光</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">下午</div>
+                    <p>找一個咖啡廳坐坐，享受悠閒時光。</p>
+                </div>
+                <div class="itinerary-item">
+                    <p>入住：<strong>Scandic Grand Central Helsinki</strong> (D3)</p>
+                </div>
+            `
+        },
+        {
+            id: "day12",
+            date: "4/7 (二)",
+            title: "返程 / 曼谷轉機",
+            content: `
+                <div class="itinerary-item">
+                    <div class="time-badge">14:05</div>
+                    <p>赫爾辛基 HEL 起飛 -> 曼谷 BKK</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">4/8 05:30</div>
+                    <p>抵達曼谷機場</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">4/8 10:50</div>
+                    <p>曼谷 BKK 起飛 -> 桃園 TPE</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">4/8 15:30</div>
+                    <p>抵達桃園機場</p>
+                </div>
+            `
+        }
+    ];
+
+    // --- DOM Elements ---
+    const tabsContainer = document.getElementById('tabsContainer');
+    const mainContent = document.getElementById('mainContent');
+    let activeTabId = tripData[0].id;
+    let unsubscribeSnapshot = null; // Store the listener unsubscription function
+    let currentTodos = []; // Store current state for optimistic updates
+
+    // --- Initialization ---
+    function init() {
+        renderTabs();
+        renderContent(activeTabId);
     }
-  });
 
-  // 初次渲染 (這時候資料可能還沒從雲端抓回來，會先顯示空的，等到 onSnapshot 觸發後會自動補上)
-  renderAll();
+    // --- Render Tabs ---
+    function renderTabs() {
+        tabsContainer.innerHTML = '';
+        tripData.forEach(day => {
+            const btn = document.createElement('button');
+            btn.className = `tab-btn ${day.id === activeTabId ? 'active' : ''}`;
+            btn.textContent = day.date;
+            btn.onclick = () => {
+                activeTabId = day.id;
+                renderTabs();
+                renderContent(day.id);
+            };
+            tabsContainer.appendChild(btn);
+        });
+    }
+
+    // --- Render Main Content & Attach Listener ---
+    async function renderContent(id) {
+        // If there is an existing listener, remove it first
+        if (unsubscribeSnapshot) {
+            unsubscribeSnapshot();
+        }
+
+        const data = tripData.find(d => d.id === id);
+        
+        // Basic HTML Skeleton
+        mainContent.innerHTML = `
+            <div class="card">
+                <div class="section-title"><span>${data.title}</span></div>
+                ${data.content}
+            </div>
+
+            <div class="card">
+                <div class="section-title">
+                    <span>📝 待辦清單 (Checklist)</span>
+                    <span id="todoStatus" class="status-indicator"></span>
+                </div>
+                <div class="todo-input-group">
+                    <input type="text" id="todoInput" class="todo-input" placeholder="新增待辦事項 (例如: 買郵票)...">
+                    <button class="add-btn" id="btnAddTodo">新增</button>
+                </div>
+                <ul id="todoList" class="todo-list">
+                    <li style="padding:10px; color:#999;">載入中...</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="section-title">
+                    <span>📒 備註 / 筆記</span>
+                    <span id="noteStatus" class="status-indicator"></span>
+                </div>
+                <textarea id="noteInput" class="notes-area" placeholder="在這裡輸入備註..."></textarea>
+            </div>
+        `;
+
+        // Attach Event Listeners to static elements
+        document.getElementById('btnAddTodo').addEventListener('click', () => handleAddTodo(id));
+        
+        // Debounce setup for Note saving
+        let noteTimeout;
+        const noteInput = document.getElementById('noteInput');
+        noteInput.addEventListener('input', (e) => {
+            document.getElementById('noteStatus').innerText = '儲存中...';
+            clearTimeout(noteTimeout);
+            noteTimeout = setTimeout(() => {
+                saveNoteToFirebase(id, e.target.value);
+            }, 800); // Wait 800ms after typing stops
+        });
+
+        // --- Firebase Realtime Listener (onSnapshot) ---
+        const docRef = doc(db, COLLECTION_NAME, id);
+
+        unsubscribeSnapshot = onSnapshot(docRef, (docSnap) => {
+            const listEl = document.getElementById('todoList');
+            const noteEl = document.getElementById('noteInput');
+            
+            if (docSnap.exists()) {
+                const dbData = docSnap.data();
+                
+                // Update Notes (Avoid overwriting if user is typing)
+                if (document.activeElement !== noteEl) {
+                     noteEl.value = dbData.note || "";
+                }
+
+                // Update Todos
+                currentTodos = dbData.todos || [];
+                renderTodoList(currentTodos, id);
+            } else {
+                // Doc doesn't exist yet, clean slate
+                currentTodos = [];
+                renderTodoList([], id);
+                if (document.activeElement !== noteEl) noteEl.value = "";
+            }
+        });
+    }
+
+    // --- UI Renderers ---
+    function renderTodoList(todos, id) {
+        const list = document.getElementById('todoList');
+        list.innerHTML = '';
+        
+        if (todos.length === 0) {
+            list.innerHTML = '<li style="padding:10px; color:#ccc;">尚無待辦事項</li>';
+            return;
+        }
+
+        todos.forEach((todo, index) => {
+            const li = document.createElement('li');
+            li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
+            
+            // Create elements manually to bind events easily
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.className = 'todo-checkbox';
+            checkbox.checked = todo.completed;
+            checkbox.addEventListener('change', () => toggleTodo(id, index, todos));
+
+            const span = document.createElement('span');
+            span.textContent = todo.text;
+
+            const delBtn = document.createElement('button');
+            delBtn.className = 'delete-btn';
+            delBtn.textContent = '×';
+            delBtn.addEventListener('click', () => deleteTodo(id, index, todos));
+
+            li.appendChild(checkbox);
+            li.appendChild(span);
+            li.appendChild(delBtn);
+            list.appendChild(li);
+        });
+    }
+
+    // --- Firebase Actions ---
+
+    async function saveNoteToFirebase(id, text) {
+        const docRef = doc(db, COLLECTION_NAME, id);
+        try {
+            await setDoc(docRef, { note: text }, { merge: true });
+            document.getElementById('noteStatus').innerText = '已同步';
+            setTimeout(() => { document.getElementById('noteStatus').innerText = ''; }, 2000);
+        } catch (e) {
+            console.error("Error saving note: ", e);
+            document.getElementById('noteStatus').innerText = '儲存失敗';
+        }
+    }
+
+    async function handleAddTodo(id) {
+        const input = document.getElementById('todoInput');
+        const text = input.value.trim();
+        if (!text) return;
+
+        const newTodos = [...currentTodos, { text: text, completed: false }];
+        updateTodosInFirebase(id, newTodos);
+        input.value = '';
+    }
+
+    async function toggleTodo(id, index, oldTodos) {
+        const newTodos = [...oldTodos];
+        newTodos[index].completed = !newTodos[index].completed;
+        updateTodosInFirebase(id, newTodos);
+    }
+
+    async function deleteTodo(id, index, oldTodos) {
+        const newTodos = [...oldTodos];
+        newTodos.splice(index, 1);
+        updateTodosInFirebase(id, newTodos);
+    }
+
+    async function updateTodosInFirebase(id, todos) {
+        const docRef = doc(db, COLLECTION_NAME, id);
+        try {
+            // Using setDoc with merge:true handles both "update" and "create new doc" scenarios
+            await setDoc(docRef, { todos: todos }, { merge: true });
+        } catch (e) {
+            console.error("Error updating todos: ", e);
+            alert("更新失敗，請檢查網路連線");
+        }
+    }
+
+    // Start App
+    init();
 
 </script>
 </body>
-
 </html>
