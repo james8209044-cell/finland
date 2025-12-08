@@ -154,141 +154,204 @@
     <div id="listContainer"></div>
   </div>
 
-  <script>
-    // 這裡依照你的行程日期設定
-    const days = [
-      { id: 'day1',  label: '3/28', title: 'DAY 1｜3/28 SAT' },
-      { id: 'day2',  label: '3/29', title: 'DAY 2｜3/29 SUN' },
-      { id: 'day3',  label: '3/30', title: 'DAY 3｜3/30 MON' },
-      { id: 'day4',  label: '3/31', title: 'DAY 4｜3/31 TUE' },
-      { id: 'day5',  label: '4/1',  title: 'DAY 5｜4/1 WED' },
-      { id: 'day6',  label: '4/2',  title: 'DAY 6｜4/2 THU' },
-      { id: 'day7',  label: '4/3',  title: 'DAY 7｜4/3 FRI' },
-      { id: 'day8',  label: '4/4',  title: 'DAY 8｜4/4 SAT' },
-      { id: 'day9',  label: '4/5',  title: 'DAY 9｜4/5 SUN' },
-      { id: 'day10', label: '4/6',  title: 'DAY 10｜4/6 MON' },
-      { id: 'day11', label: '4/7',  title: 'DAY 11｜4/7 TUE' }
-    ];
+ <script type="module">
+  // ---------------------------------------------------------
+  // 1. Firebase 設定與初始化
+  // ---------------------------------------------------------
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-    const STORAGE_KEY = 'finland_checklist_v1';
+  // 【重要】請將這裡換成你自己的 Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBwIh3o0YLN6dUkd8WVKB-heRMGNQT10e0",
+    authDomain: "database-650f5.firebaseapp.com",
+    projectId: "database-650f5",
+    storageBucket: "database-650f5.firebasestorage.app",
+    messagingSenderId: "698025718902",
+    appId: "1:698025718902:web:9f6a015a0e54cd234adb57",
+    measurementId: "G-N1XSQ3ETCE",
+  };
 
-    const tabRow = document.getElementById('tabRow');
-    const dateLabel = document.getElementById('dateLabel');
-    const listContainer = document.getElementById('listContainer');
-    const addInput = document.getElementById('addInput');
-    const addBtn = document.getElementById('addBtn');
+  // 初始化 Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
 
-    let state = loadState();
-    let currentDayId = state.currentDayId || days[0].id;
+  // 指定資料庫位置：集合 "finland" -> 文件 "shared_checklist"
+  const docRef = doc(db, "finland", "shared_checklist");
 
-    // 讀取 localStorage
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return { itemsByDay: {} };
-        return JSON.parse(raw);
-      } catch {
-        return { itemsByDay: {} };
-      }
+  // ---------------------------------------------------------
+  // 2. 靜態資料與變數
+  // ---------------------------------------------------------
+  const days = [
+    { id: 'day1',  label: '3/28', title: 'DAY 1｜3/28 SAT' },
+    { id: 'day2',  label: '3/29', title: 'DAY 2｜3/29 SUN' },
+    { id: 'day3',  label: '3/30', title: 'DAY 3｜3/30 MON' },
+    { id: 'day4',  label: '3/31', title: 'DAY 4｜3/31 TUE' },
+    { id: 'day5',  label: '4/1',  title: 'DAY 5｜4/1 WED' },
+    { id: 'day6',  label: '4/2',  title: 'DAY 6｜4/2 THU' },
+    { id: 'day7',  label: '4/3',  title: 'DAY 7｜4/3 FRI' },
+    { id: 'day8',  label: '4/4',  title: 'DAY 8｜4/4 SAT' },
+    { id: 'day9',  label: '4/5',  title: 'DAY 9｜4/5 SUN' },
+    { id: 'day10', label: '4/6',  title: 'DAY 10｜4/6 MON' },
+    { id: 'day11', label: '4/7',  title: 'DAY 11｜4/7 TUE' }
+  ];
+
+  // DOM 元件
+  const tabRow = document.getElementById('tabRow');
+  const dateLabel = document.getElementById('dateLabel');
+  const listContainer = document.getElementById('listContainer');
+  const addInput = document.getElementById('addInput');
+  const addBtn = document.getElementById('addBtn');
+
+  // 狀態管理
+  let itemsByDay = {}; // 這裡存放雲端回來的資料
+  
+  // 讀取「使用者上次停在哪一天」（這不用同步，存本機就好）
+  let currentDayId = localStorage.getItem('my_last_day') || days[0].id;
+
+  // ---------------------------------------------------------
+  // 3. 核心功能：監聽與儲存
+  // ---------------------------------------------------------
+
+  // 【讀取】監聽 Firebase 資料庫變化
+  // 只要雲端資料一變，這裡就會自動執行，更新畫面
+  onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+      // 確保即使某天沒資料，也不會報錯
+      itemsByDay = data.itemsByDay || {};
+    } else {
+      // 如果資料庫是全新的，初始化它
+      itemsByDay = {};
+      saveToCloud(); 
     }
+    renderAll(); // 重新繪製畫面
+  });
 
-    // 寫入 localStorage
-    function saveState() {
-      state.currentDayId = currentDayId;
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  // 【寫入】將目前的狀態儲存到 Firebase
+  async function saveToCloud() {
+    try {
+      // 我們把整包 itemsByDay 存上去
+      await setDoc(docRef, { itemsByDay: itemsByDay }, { merge: true });
+    } catch (e) {
+      console.error("儲存失敗：", e);
+      alert("儲存失敗，請檢查網路或 API 設定");
     }
+  }
 
-    // 依照 state 渲染 tabs & 清單
-    function renderTabs() {
-      tabRow.innerHTML = '';
-      days.forEach(d => {
-        const btn = document.createElement('button');
-        btn.className = 'tab-btn' + (d.id === currentDayId ? ' active' : '');
-        btn.textContent = d.label;
-        btn.onclick = () => {
-          currentDayId = d.id;
-          saveState();
-          renderAll();
-        };
-        tabRow.appendChild(btn);
-      });
-      const current = days.find(d => d.id === currentDayId);
-      dateLabel.textContent = current ? current.title : '';
-    }
+  // ---------------------------------------------------------
+  // 4. 畫面渲染邏輯 (Render)
+  // ---------------------------------------------------------
 
-    function renderList() {
-      const items = (state.itemsByDay[currentDayId] || []);
-      listContainer.innerHTML = '';
-
-      items.forEach((item, index) => {
-        const div = document.createElement('div');
-        div.className = 'item' + (item.done ? ' done' : '');
-
-        const left = document.createElement('div');
-        left.className = 'item-left';
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = item.done;
-        checkbox.onchange = () => {
-          item.done = checkbox.checked;
-          saveState();
-          renderList();
-        };
-
-        const text = document.createElement('div');
-        text.className = 'item-text';
-        text.textContent = item.text;
-
-        left.appendChild(checkbox);
-        left.appendChild(text);
-
-        const delBtn = document.createElement('button');
-        delBtn.className = 'delete-btn';
-        delBtn.textContent = '⋯';
-        delBtn.title = '刪除';
-        delBtn.onclick = () => {
-          if (confirm('要刪除這個項目嗎？')) {
-            state.itemsByDay[currentDayId].splice(index, 1);
-            saveState();
-            renderList();
-          }
-        };
-
-        div.appendChild(left);
-        div.appendChild(delBtn);
-        listContainer.appendChild(div);
-      });
-    }
-
-    function renderAll() {
-      renderTabs();
-      renderList();
-    }
-
-    // 新增項目
-    function addItem() {
-      const text = addInput.value.trim();
-      if (!text) return;
-      if (!state.itemsByDay[currentDayId]) {
-        state.itemsByDay[currentDayId] = [];
-      }
-      state.itemsByDay[currentDayId].push({ text, done: false });
-      addInput.value = '';
-      saveState();
-      renderList();
-    }
-
-    addBtn.addEventListener('click', addItem);
-    addInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        addItem();
-      }
+  function renderTabs() {
+    tabRow.innerHTML = '';
+    days.forEach(d => {
+      const btn = document.createElement('button');
+      btn.className = 'tab-btn' + (d.id === currentDayId ? ' active' : '');
+      btn.textContent = d.label;
+      btn.onclick = () => {
+        currentDayId = d.id;
+        // 記住使用者選的天數
+        localStorage.setItem('my_last_day', currentDayId);
+        renderAll();
+      };
+      tabRow.appendChild(btn);
     });
+    
+    const current = days.find(d => d.id === currentDayId);
+    dateLabel.textContent = current ? current.title : '';
+  }
 
-    // 初始化
-    renderAll();
-  </script>
+  function renderList() {
+    const items = itemsByDay[currentDayId] || [];
+    listContainer.innerHTML = '';
+
+    items.forEach((item) => {
+      const div = document.createElement('div');
+      div.className = 'item' + (item.done ? ' done' : '');
+
+      const left = document.createElement('div');
+      left.className = 'item-left';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = item.done;
+      
+      // 當打勾狀態改變
+      checkbox.onchange = () => {
+        item.done = checkbox.checked;
+        saveToCloud(); // 同步到雲端
+      };
+
+      const text = document.createElement('div');
+      text.className = 'item-text';
+      text.textContent = item.text;
+
+      left.appendChild(checkbox);
+      left.appendChild(text);
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'delete-btn';
+      delBtn.textContent = '⋯';
+      delBtn.title = '刪除';
+      
+      // 刪除邏輯
+      delBtn.onclick = () => {
+        if (confirm('要刪除這個項目嗎？')) {
+          // 使用 filter 透過 ID 刪除，避免刪錯人
+          itemsByDay[currentDayId] = itemsByDay[currentDayId].filter(i => i.id !== item.id);
+          saveToCloud(); // 同步到雲端
+        }
+      };
+
+      div.appendChild(left);
+      div.appendChild(delBtn);
+      listContainer.appendChild(div);
+    });
+  }
+
+  function renderAll() {
+    renderTabs();
+    renderList();
+  }
+
+  // ---------------------------------------------------------
+  // 5. 新增項目 (這裡實作了你的預設規則)
+  // ---------------------------------------------------------
+  function addItem() {
+    const text = addInput.value.trim();
+    if (!text) return;
+
+    if (!itemsByDay[currentDayId]) {
+      itemsByDay[currentDayId] = [];
+    }
+
+    // 【規則】建立新項目時，自動加上 id (使用當下時間戳記)
+    const newItem = {
+      id: Date.now(), // 這就是身分證，比如 1709123456789
+      text: text,
+      done: false
+    };
+
+    itemsByDay[currentDayId].push(newItem);
+    
+    addInput.value = '';
+    saveToCloud(); // 儲存到雲端
+  }
+
+  // 綁定按鈕事件
+  addBtn.addEventListener('click', addItem);
+  addInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      addItem();
+    }
+  });
+
+  // 初次渲染 (這時候資料可能還沒從雲端抓回來，會先顯示空的，等到 onSnapshot 觸發後會自動補上)
+  renderAll();
+
+</script>
 </body>
+
 </html>
