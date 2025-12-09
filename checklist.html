@@ -23,11 +23,11 @@
             line-height: 1.6;
         }
 
-        /* Header */
+        /* --- Header Styling (Magnified) --- */
         header {
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: white;
-            padding: 20px;
+            padding: 25px 20px;
             text-align: center;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             position: sticky;
@@ -37,21 +37,22 @@
 
         header h1 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 2.5rem; /* Magnified Title */
+            font-weight: 800;
         }
 
         header p {
-            margin: 5px 0 0;
-            font-size: 0.9rem;
-            opacity: 0.8;
+            margin: 10px 0 0;
+            font-size: 1.2rem; /* Magnified Date Range */
+            opacity: 0.9;
         }
 
-        /* Tab Navigation */
+        /* --- Tab Navigation (Magnified) --- */
         .tabs-container {
             background-color: #fff;
             overflow-x: auto;
             white-space: nowrap;
-            padding: 10px 5px;
+            padding: 15px 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             -webkit-overflow-scrolling: touch;
         }
@@ -59,12 +60,12 @@
         .tab-btn {
             background: none;
             border: none;
-            padding: 10px 15px;
+            padding: 12px 20px;
             margin: 0 5px;
-            font-size: 0.95rem;
+            font-size: 1.3rem; /* Magnified Tab Text */
             color: #666;
             cursor: pointer;
-            border-radius: 20px;
+            border-radius: 30px;
             transition: all 0.3s ease;
         }
 
@@ -75,7 +76,7 @@
             box-shadow: 0 2px 5px rgba(52, 152, 219, 0.4);
         }
 
-        /* Main Content */
+        /* --- Main Content --- */
         .container {
             max-width: 800px;
             margin: 20px auto;
@@ -86,17 +87,19 @@
         .card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
-            padding: 20px;
-            margin-bottom: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
+        /* Magnified Section Title */
         .section-title {
-            font-size: 1.2rem;
+            font-size: 1.8rem; /* Magnified */
+            font-weight: 700;
             color: var(--primary-color);
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+            border-bottom: 3px solid #eee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -105,53 +108,74 @@
         .section-title::before {
             content: '';
             display: inline-block;
-            width: 6px;
-            height: 24px;
+            width: 8px;
+            height: 32px; /* Adjusted for larger font */
             background-color: var(--accent-color);
-            margin-right: 10px;
-            border-radius: 3px;
-            position: absolute; /* Hack for visual alignment */
-            margin-left: -16px;
+            margin-right: 15px;
+            border-radius: 4px;
+            position: absolute;
+            margin-left: -25px;
         }
         
-        .section-title span {
-            margin-left: 10px;
-        }
-
         .status-indicator {
-            font-size: 0.7rem;
+            font-size: 0.9rem;
             color: #888;
             font-weight: normal;
         }
 
-        /* Itinerary Content Styling */
+        /* --- Itinerary Content Styling --- */
         .itinerary-item {
-            margin-bottom: 15px;
-            padding-left: 10px;
-            border-left: 3px solid #eee;
+            margin-bottom: 25px;
+            padding-left: 15px;
+            border-left: 4px solid #eee;
         }
         
+        /* Magnified Time Badge */
         .time-badge {
             display: inline-block;
             background-color: #e8f4fc;
             color: var(--accent-color);
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            margin-bottom: 5px;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 1.4rem; /* Magnified Time */
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .itinerary-item p, .itinerary-item li {
+            font-size: 1.1rem; /* Slightly larger body text */
+            margin-bottom: 8px;
         }
 
         .highlight-box {
             background-color: #fff8e1;
             border: 1px solid #ffe0b2;
-            padding: 10px;
+            padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
+            font-weight: 500;
         }
 
-        /* Checklist Styles */
+        /* --- Map Links --- */
+        .map-link {
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px dotted #e67e22;
+            transition: all 0.2s;
+        }
+        .map-link:hover {
+            background-color: #fff3e0;
+            border-bottom: 2px solid #e67e22;
+        }
+        .map-link::after {
+            content: '📍';
+            font-size: 0.9em;
+            margin-left: 4px;
+        }
+
+        /* --- Checklist & Notes --- */
         .todo-input-group {
             display: flex;
             gap: 10px;
@@ -160,20 +184,21 @@
 
         .todo-input {
             flex: 1;
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 1.1rem;
         }
 
         .add-btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 0 20px;
+            padding: 0 25px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
+            font-size: 1.1rem;
         }
 
         .todo-list {
@@ -185,11 +210,11 @@
         .todo-item {
             display: flex;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
             background-color: #f9f9f9;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             border-radius: 8px;
-            transition: background 0.2s;
+            font-size: 1.1rem;
         }
 
         .todo-item.completed {
@@ -203,8 +228,8 @@
         }
 
         .todo-checkbox {
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
             margin-right: 15px;
             cursor: pointer;
         }
@@ -215,18 +240,18 @@
             border: none;
             color: #ff6b6b;
             cursor: pointer;
-            font-size: 1.2rem;
-            padding: 0 5px;
+            font-size: 1.5rem;
+            padding: 0 10px;
         }
 
-        /* Notes Styles */
         .notes-area {
             width: 100%;
-            height: 120px;
-            padding: 10px;
+            height: 150px;
+            padding: 15px;
             border: 1px solid #ddd;
             border-radius: 8px;
             font-family: inherit;
+            font-size: 1.1rem;
             resize: vertical;
             box-sizing: border-box;
         }
@@ -244,12 +269,10 @@
 
 <!-- Firebase Setup -->
 <script type="module">
-    // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-    import { getFirestore, doc, onSnapshot, setDoc, updateDoc, arrayUnion, getDoc } 
+    import { getFirestore, doc, onSnapshot, setDoc } 
     from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-    // Your web app's Firebase configuration
     const firebaseConfig = {
         apiKey: "AIzaSyBwIh3o0YLN6dUkd8WVKB-heRMGNQT10e0",
         authDomain: "database-650f5.firebaseapp.com",
@@ -260,25 +283,31 @@
         measurementId: "G-N1XSQ3ETCE"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const COLLECTION_NAME = "itinerary_data";
+    const COLLECTION_NAME = "itinerary_data_v2"; // Changed collection to separate new data
 
-    // --- Trip Data Source ---
+    // --- Helper for Maps ---
+    const gMap = (name, query = null) => {
+        const q = query || name;
+        return `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" class="map-link">${name}</a>`;
+    };
+
+    // --- Trip Data Source (2026/3/27 Updated) ---
     const tripData = [
         {
             id: "info",
-            date: "行前資訊",
-            title: "交通 & 行李 & 住宿",
+            date: "ℹ️ 行前資訊",
+            title: "交通 & 行李 & 重點",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">行李寄存</div>
-                    <p><strong>1. Radical storage (一天5歐):</strong> 赫爾辛基與羅瓦涅米 行李寄存APP (10:00 - 19-22點之間要拿走)</p>
-                    <p><strong>2. Rovaniemi Insider Luggage Storage:</strong> 若火車站沒有空位可去。地點：Korkalonkatu 36 羅瓦涅米市中心</p>
+                    <p><strong>1. Radical storage (一天5歐):</strong> 赫爾辛基與羅瓦涅米 APP (10:00 - 19-22點之間要拿走)</p>
+                    <p><strong>2. Rovaniemi Insider Luggage Storage:</strong> 若火車站沒位可去。</p>
+                    <p>地點：${gMap('Korkalonkatu 36', 'Korkalonkatu 36 Rovaniemi')}</p>
                 </div>
                 <div class="itinerary-item">
-                    <div class="time-badge">主要交通</div>
+                    <div class="time-badge">主要交通移動</div>
                     <ul style="padding-left: 20px; margin: 5px 0;">
                         <li>3/28 赫爾辛基機場 -> 赫爾辛基車站</li>
                         <li>3/30 羅瓦涅米 -> 聖誕老人村</li>
@@ -291,8 +320,8 @@
         },
         {
             id: "day1",
-            date: "3/17 (五)",
-            title: "出發 / 飛行中",
+            date: "3/27 (五)",
+            title: "✈️ 出發日 / 飛行中",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">07:50 - 11:20</div>
@@ -307,55 +336,74 @@
         {
             id: "day2",
             date: "3/28 (六)",
-            title: "抵達赫爾辛基",
+            title: "🇫🇮 抵達赫爾辛基",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">05:40</div>
                     <p>降落赫爾辛基機場</p>
+                    <p>搭乘火車 I線 或 P線 抵達 ${gMap('赫爾辛基中央車站', 'Helsinki Central Station')}</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">上午</div>
-                    <p>前往市中心住宿 Check-in (寄放行李)，隨後市區自由活動。</p>
+                    <p>前往 ${gMap('Scandic Grand Central Helsinki')} 寄放行李。</p>
                 </div>
                 <div class="itinerary-item">
-                    <div class="time-badge">16:00</div>
-                    <p>入住 <strong>Scandic Grand Central Helsinki</strong></p>
+                    <div class="time-badge">推薦行程</div>
+                    <p>• ${gMap('老農貿市場', 'Old Market Hall Helsinki')} 喝鮭魚湯 (需步行17分鐘)</p>
+                    <p>• ${gMap('赫爾辛基集市廣場', 'Market Square Helsinki')} (步行很近)</p>
+                    <p>• ${gMap('OMA puoti')} 小廢物店</p>
+                    <p>• ${gMap('赫爾辛基參議院廣場', 'Senate Square Helsinki')}</p>
+                    <p>• 想喝咖啡：火車站出來有 ${gMap("Robert's Coffee", "Robert's Coffee Helsinki Central Station")}</p>
+                    <div class="highlight-box">💡 中間真的很累，可以去 ${gMap('Oodi 圖書館', 'Helsinki Central Library Oodi')} 睡覺</div>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">住宿</div>
+                    <p>${gMap('Scandic Grand Central Helsinki')}</p>
                 </div>
             `
         },
         {
             id: "day3",
             date: "3/29 (日)",
-            title: "赫爾辛基 -> 臥鋪火車",
+            title: "🚆 市區漫遊 -> 臥鋪火車",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">12:00</div>
-                    <p>退房。享用飯店早餐、市區走動 (行李寄存)。</p>
+                    <p>退房。享用飯店早餐、行李寄存後市區走動。</p>
                 </div>
                 <div class="itinerary-item">
-                    <div class="time-badge">下午</div>
-                    <p>自由活動日</p>
+                    <div class="time-badge">推薦行程</div>
+                    <p>• ${gMap('Ravintola Strindberg')} 咖啡廳</p>
+                    <p>• ${gMap('Amos Rex 美術館')} (看展覽)</p>
+                    <p>• ${gMap('靜默教堂', 'Kamppi Chapel')}</p>
+                    <p>• ${gMap('Forum 百貨公司', 'Forum Department Store Helsinki')} 逛街</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">19:29</div>
-                    <p>搭乘臥鋪火車 (Night train 265) 前往羅瓦涅米。</p>
-                    <div class="highlight-box">設施：上下舖、私人衛浴 (Private en suite and shower)</div>
+                    <p>買個東西吃，去提行李，準備上火車。</p>
+                    <p><strong>搭乘臥鋪火車 (Night train 265)</strong></p>
+                    <p>時間：Sun 19:29 – Mon 07:20</p>
+                    <div class="highlight-box">設施：上下舖、私人衛浴</div>
                 </div>
             `
         },
         {
             id: "day4",
             date: "3/30 (一)",
-            title: "羅瓦涅米 / 聖誕老人村",
+            title: "🎅 羅瓦涅米 / 聖誕老人村",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">07:20</div>
-                    <p>抵達羅瓦涅米 (Rovaniemi)</p>
+                    <p>抵達 ${gMap('羅瓦涅米車站', 'Rovaniemi Railway Station')}</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">上午 - 15:00</div>
-                    <p>自由活動、前往聖誕老人村 Check-in。</p>
-                    <p>聖誕老人村觀光 (拍照、購物)。</p>
+                    <p>市區自由活動 (百貨公司或二手店舖)。</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">15:00</div>
+                    <p>前往 ${gMap('聖誕老人村', 'Santa Claus Village Rovaniemi')} Check-in。</p>
+                    <p>村內觀光 (拍照、東買西買)。</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">16:00</div>
@@ -366,29 +414,29 @@
         {
             id: "day5",
             date: "3/31 (二)",
-            title: "破冰船體驗",
+            title: "🚢 破冰船體驗",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">10:45 (表定)</div>
                     <p>聖誕老人村接駁 -> 前往瑞典</p>
                 </div>
                 <div class="itinerary-item">
-                    <div class="time-badge">活動</div>
-                    <p><strong>Polar Explorer 破冰船、龍蝦裝漂浮</strong> (KLOOK預定)</p>
+                    <div class="time-badge">重點活動</div>
+                    <p><strong>Polar Explorer 破冰船、龍蝦裝</strong> (KLOOK預定)</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">19:50 (表定)</div>
                     <p>抵達聖誕老人村</p>
                 </div>
                 <div class="itinerary-item">
-                    <p>住宿：<strong>聖誕老人村</strong> (D2)</p>
+                    <p>入住：<strong>聖誕老人村</strong> (D2)</p>
                 </div>
             `
         },
         {
             id: "day6",
             date: "4/1 (三)",
-            title: "雪橇體驗 / 移動至玻璃屋",
+            title: "🛷 雪橇體驗 / 移動至玻璃屋",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">12:00</div>
@@ -404,14 +452,14 @@
                     <p>確認接駁車前往玻璃屋時間</p>
                 </div>
                 <div class="itinerary-item">
-                    <p>入住：<strong>Apukka Resort 玻璃屋</strong> (D1)</p>
+                    <p>入住：${gMap('Apukka Resort 玻璃屋', 'Apukka Resort Rovaniemi')} (D1)</p>
                 </div>
             `
         },
         {
             id: "day7",
             date: "4/2 (四)",
-            title: "玻璃屋度假村",
+            title: "✨ 玻璃屋度假村",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">全天</div>
@@ -425,7 +473,7 @@
         {
             id: "day8",
             date: "4/3 (五)",
-            title: "返程羅瓦涅米 / 臥鋪火車",
+            title: "🚆 返程羅瓦涅米 / 臥鋪火車",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">白天</div>
@@ -442,31 +490,40 @@
         {
             id: "day9",
             date: "4/4 (六)",
-            title: "抵達赫爾辛基",
+            title: "🏙️ 抵達赫爾辛基",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">06:27</div>
                     <p>抵達赫爾辛基</p>
                 </div>
                 <div class="itinerary-item">
-                    <div class="time-badge">白天</div>
-                    <p>赫爾辛基市區觀光</p>
-                    <p>推薦：安排老農貿市集觀光，享用鮭魚湯</p>
+                    <div class="time-badge">市區推薦</div>
+                    <p>• ${gMap('Ekberg 1852 百年烘焙店', 'Ekberg 1852 Helsinki')}</p>
+                    <p>• ${gMap('Esplanadi 公園', 'Esplanadi Helsinki')}</p>
+                    <p>• 亞洲胃嘴饞可以去吃 ${gMap('Pho Viet', 'Pho Viet Helsinki')}</p>
+                    <p>💡 累了可以去 ${gMap('Oodi 圖書館', 'Helsinki Central Library Oodi')} 休息</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">16:00</div>
-                    <p>入住 <strong>Scandic Grand Central Helsinki</strong> (D1)</p>
+                    <p>入住 ${gMap('Scandic Grand Central Helsinki')} (D1)</p>
                 </div>
             `
         },
         {
             id: "day10",
             date: "4/5 (日)",
-            title: "赫爾辛基市區",
+            title: "🛍️ 赫爾辛基市區",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">全天</div>
-                    <p>赫爾辛基市區觀光 (可安排 Shopping 行程)</p>
+                    <p>赫爾辛基市區觀光 / Shopping</p>
+                </div>
+                <div class="itinerary-item">
+                    <div class="time-badge">推薦行程</div>
+                    <p>• ${gMap('聖殿廣場教堂 (岩石教堂)', 'Temppeliaukion Church')}</p>
+                    <p>• 吃 ${gMap('Cafe Regatta')} 肉桂捲</p>
+                    <p>• ${gMap('Kamppi 百貨公司', 'Kamppi Helsinki')} 逛逛</p>
+                    <p>• ${gMap('Stockmann 百貨公司', 'Stockmann Helsinki Department Store')} 逛逛</p>
                 </div>
                 <div class="itinerary-item">
                     <p>入住：<strong>Scandic Grand Central Helsinki</strong> (D2)</p>
@@ -476,15 +533,17 @@
         {
             id: "day11",
             date: "4/6 (一)",
-            title: "芬蘭堡 / 市區慢活",
+            title: "🏰 芬蘭堡 / 市區慢活",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">上午</div>
-                    <p>建議：芬蘭堡觀光</p>
+                    <p>建議：${gMap('芬蘭堡', 'Suomenlinna')} 觀光</p>
+                    <p>預計找攝影拍照</p>
                 </div>
                 <div class="itinerary-item">
                     <div class="time-badge">下午</div>
-                    <p>找一個咖啡廳坐坐，享受悠閒時光。</p>
+                    <p>• ${gMap('Design District Helsinki', 'Design District Helsinki')} 設計商品街區</p>
+                    <p>• ${gMap('Kappeli 咖啡廳', 'Restaurant Kappeli')}</p>
                 </div>
                 <div class="itinerary-item">
                     <p>入住：<strong>Scandic Grand Central Helsinki</strong> (D3)</p>
@@ -494,7 +553,7 @@
         {
             id: "day12",
             date: "4/7 (二)",
-            title: "返程 / 曼谷轉機",
+            title: "✈️ 返程 / 曼谷轉機",
             content: `
                 <div class="itinerary-item">
                     <div class="time-badge">14:05</div>
@@ -520,8 +579,8 @@
     const tabsContainer = document.getElementById('tabsContainer');
     const mainContent = document.getElementById('mainContent');
     let activeTabId = tripData[0].id;
-    let unsubscribeSnapshot = null; // Store the listener unsubscription function
-    let currentTodos = []; // Store current state for optimistic updates
+    let unsubscribeSnapshot = null;
+    let currentTodos = [];
 
     // --- Initialization ---
     function init() {
@@ -547,14 +606,12 @@
 
     // --- Render Main Content & Attach Listener ---
     async function renderContent(id) {
-        // If there is an existing listener, remove it first
         if (unsubscribeSnapshot) {
             unsubscribeSnapshot();
         }
 
         const data = tripData.find(d => d.id === id);
         
-        // Basic HTML Skeleton
         mainContent.innerHTML = `
             <div class="card">
                 <div class="section-title"><span>${data.title}</span></div>
@@ -563,11 +620,11 @@
 
             <div class="card">
                 <div class="section-title">
-                    <span>📝 待辦清單 (Checklist)</span>
+                    <span>📝 待辦清單</span>
                     <span id="todoStatus" class="status-indicator"></span>
                 </div>
                 <div class="todo-input-group">
-                    <input type="text" id="todoInput" class="todo-input" placeholder="新增待辦事項 (例如: 買郵票)...">
+                    <input type="text" id="todoInput" class="todo-input" placeholder="新增待辦 (例如: 買郵票)...">
                     <button class="add-btn" id="btnAddTodo">新增</button>
                 </div>
                 <ul id="todoList" class="todo-list">
@@ -584,10 +641,9 @@
             </div>
         `;
 
-        // Attach Event Listeners to static elements
+        // Event Listeners
         document.getElementById('btnAddTodo').addEventListener('click', () => handleAddTodo(id));
         
-        // Debounce setup for Note saving
         let noteTimeout;
         const noteInput = document.getElementById('noteInput');
         noteInput.addEventListener('input', (e) => {
@@ -595,29 +651,23 @@
             clearTimeout(noteTimeout);
             noteTimeout = setTimeout(() => {
                 saveNoteToFirebase(id, e.target.value);
-            }, 800); // Wait 800ms after typing stops
+            }, 800);
         });
 
-        // --- Firebase Realtime Listener (onSnapshot) ---
+        // Firebase Listener
         const docRef = doc(db, COLLECTION_NAME, id);
-
         unsubscribeSnapshot = onSnapshot(docRef, (docSnap) => {
             const listEl = document.getElementById('todoList');
             const noteEl = document.getElementById('noteInput');
             
             if (docSnap.exists()) {
                 const dbData = docSnap.data();
-                
-                // Update Notes (Avoid overwriting if user is typing)
                 if (document.activeElement !== noteEl) {
                      noteEl.value = dbData.note || "";
                 }
-
-                // Update Todos
                 currentTodos = dbData.todos || [];
                 renderTodoList(currentTodos, id);
             } else {
-                // Doc doesn't exist yet, clean slate
                 currentTodos = [];
                 renderTodoList([], id);
                 if (document.activeElement !== noteEl) noteEl.value = "";
@@ -639,7 +689,6 @@
             const li = document.createElement('li');
             li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
             
-            // Create elements manually to bind events easily
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.className = 'todo-checkbox';
@@ -662,7 +711,6 @@
     }
 
     // --- Firebase Actions ---
-
     async function saveNoteToFirebase(id, text) {
         const docRef = doc(db, COLLECTION_NAME, id);
         try {
@@ -670,7 +718,7 @@
             document.getElementById('noteStatus').innerText = '已同步';
             setTimeout(() => { document.getElementById('noteStatus').innerText = ''; }, 2000);
         } catch (e) {
-            console.error("Error saving note: ", e);
+            console.error(e);
             document.getElementById('noteStatus').innerText = '儲存失敗';
         }
     }
@@ -700,18 +748,14 @@
     async function updateTodosInFirebase(id, todos) {
         const docRef = doc(db, COLLECTION_NAME, id);
         try {
-            // Using setDoc with merge:true handles both "update" and "create new doc" scenarios
             await setDoc(docRef, { todos: todos }, { merge: true });
         } catch (e) {
-            console.error("Error updating todos: ", e);
+            console.error(e);
             alert("更新失敗，請檢查網路連線");
         }
     }
 
-    // Start App
     init();
-
 </script>
 </body>
 </html>
-
