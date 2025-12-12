@@ -285,12 +285,14 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const COLLECTION_NAME = "itinerary_data_v2"; // Changed collection to separate new data
+    const COLLECTION_NAME = "itinerary_data_v2"; 
 
-    // --- Helper for Maps ---
+    // --- Helper for Maps (UPDATED FOR DIRECTIONS) ---
+    // 改為 /dir/ (導航模式) 並使用 destination 參數。
+    // 不指定 origin (起點)，Google Maps 會預設使用「目前位置」。
     const gMap = (name, query = null) => {
         const q = query || name;
-        return `<a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}" target="_blank" class="map-link">${name}</a>`;
+        return `<a href="https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}" target="_blank" class="map-link">${name}</a>`;
     };
 
     // --- Trip Data Source (2026/3/27 Updated) ---
